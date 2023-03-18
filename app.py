@@ -1,5 +1,5 @@
 import numpy as np
-from flask import Flask, render_template,request
+from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 from PIL import Image
 
@@ -8,6 +8,7 @@ from prePreocess import *
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'upload'
+
 
 @app.route('/')
 def index():
@@ -24,12 +25,9 @@ def predict():
     output_filepath = os.path.join(app.config['UPLOAD_FOLDER'], output_filename)
     file.save(output_filepath)
 
+    result = predictiv3(output_filepath)
 
-    data = preprocess(output_filepath)
-    disease = predictDisease(data)
-
-
-    prediction = disease
+    prediction = result
     os.remove(output_filepath)
     return '<html><body><h1>Results:</h1><p>Prediction: {prediction}</p></body></html>'.format(prediction=prediction)
 
