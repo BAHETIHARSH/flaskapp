@@ -25,7 +25,11 @@ def predict():
     output_filepath = os.path.join(app.config['UPLOAD_FOLDER'], output_filename)
     file.save(output_filepath)
 
-    result = predictiv3(output_filepath)
+    if istoamtoleaf(output_filepath):
+        result = "Image seems not to be of Tomato,but its sure that its tomato then the disease is : "
+    else:
+        result = ""
+    result += str(predictiv3(output_filepath))
 
     prediction = result
     os.remove(output_filepath)

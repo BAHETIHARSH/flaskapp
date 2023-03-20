@@ -24,8 +24,8 @@ import numpy as np
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
 # Load the saved model
-model = tf.keras.models.load_model('diseasepredictorModel.h5')
-
+diseasemodel = tf.keras.models.load_model('diseasepredictorModel.h5')
+istomato = tf.keras.models.load_model('tomatovsother.h5')
 # Define the input shape and number of classes
 input_shape = [224, 224]
 
@@ -34,7 +34,16 @@ def predictiv3(image_path):
     img = load_img(image_path, target_size=input_shape[:2])
     img_array = img_to_array(img) / 255.0
     img_array = np.expand_dims(img_array, axis=0)
-    prediction = model.predict(img_array)
+    prediction = diseasemodel.predict(img_array)
     class_idx = np.argmax(prediction)
     class_name = diseases[class_idx]
+    return class_name
+
+def istoamtoleaf(image_path):
+    img = load_img(image_path, target_size=input_shape[:2])
+    img_array = img_to_array(img) / 255.0
+    img_array = np.expand_dims(img_array, axis=0)
+    prediction = istomato.predict(img_array)
+    class_idx = np.argmax(prediction)
+    class_name = class_idx
     return class_name
