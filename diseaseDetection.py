@@ -3,6 +3,9 @@ from sklearn.ensemble import RandomForestClassifier
 import warnings
 warnings.filterwarnings("ignore")
 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 diseases = {2: 'Tomato Late blight',
             9: 'Tomato healthy',
             1: 'Tomato Early blight',
